@@ -6,10 +6,12 @@ TEMPLATE = app
 DEFINES += QT_DEPRECATED_WARNINGS
 
 HEADERS += \
-    mainwindow.h
+    mainwindow.h \
+    soil.h
 
 FORMS +=
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    soil.cpp
