@@ -11,7 +11,13 @@ using namespace boost::units::si;
 class Soil
 {
 public:
-    Soil();
+    Soil() {};
+
+    virtual quantity<length> getDmF()=0;
+    virtual quantity<length> getD50()=0;
+
+private:
+
 };
 
 #endif // SOIL_H

@@ -13,5 +13,4 @@ FORMS +=
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp \
-    soil.cpp
+    mainwindow.cpp
