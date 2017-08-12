@@ -16,8 +16,6 @@ public:
     virtual quantity<length> getDmF()=0;
     virtual quantity<length> getD50()=0;
 
-private:
-
 };
 
 #endif // SOIL_H

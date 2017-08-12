@@ -7,10 +7,12 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 HEADERS += \
     mainwindow.h \
-    soil.h
+    soil.h \
+    psdview.h
 
 FORMS +=
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    psdview.cpp
