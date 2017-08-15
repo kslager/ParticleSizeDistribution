@@ -19,7 +19,7 @@ PSDView::PSDView(QWidget *parent) : QGraphicsView(new QGraphicsScene, parent),
     _chart->legend()->hide();
 
     QLineSeries *series = new QLineSeries;
-    series->append(0.0336309228718879, 0.0);
+/*    series->append(0.0336309228718879, 0.0);
     series->append(0.0595849288565138, 0.1);
     series->append(0.0784757163748353, 0.2);
     series->append(0.0900605761092338, 0.3);
@@ -29,11 +29,11 @@ PSDView::PSDView(QWidget *parent) : QGraphicsView(new QGraphicsScene, parent),
     series->append(0.114903621173393, 0.7);
     series->append(0.122442856675688, 0.8);
     series->append(0.137572925508522, 0.9);
-    series->append(0.195133363519118, 1.0);
+    series->append(0.195133363519118, 1.0);*/
     _chart->addSeries(series);
 
     QLogValueAxis *axisX = new QLogValueAxis;
-    axisX->setRange(0.001,2000);
+    axisX->setRange(MIN_D,MAX_D);
     axisX->setVisible(false);
     _chart->addAxis(axisX, Qt::AlignBottom);
 
@@ -41,6 +41,7 @@ PSDView::PSDView(QWidget *parent) : QGraphicsView(new QGraphicsScene, parent),
     axisY->setRange(0.0,1.0);
     axisY->setTickCount(11);
     axisY->setTitleText("Mass percentage passing sieve");
+    axisY->setLabelsVisible(false);
     _chart->addAxis(axisY, Qt::AlignLeft);
 
     series->attachAxis(axisX);
@@ -81,7 +82,7 @@ PSDView::PSDView(QWidget *parent) : QGraphicsView(new QGraphicsScene, parent),
     _soilClass.middleLine = scene()->addLine(0.0, 0.0, 0.0, 0.0);
     _soilClass.middleLine->setPen(axisX->gridLinePen());
 
-    _soilClass.intervals = { 1e-3, 0.002, 0.063, 2.0, 63.0, 200.0, 650.0, 2000.0 };
+    _soilClass.intervals = { MIN_D, 0.002, 0.063, 2.0, 63.0, 200.0, 650.0, MAX_D};
     std::vector<std::string> labels = { "lutum", "silt", "zand", "grind", "stenen", "keien", "blokken" };
 
     for(uint i = 1; i < _soilClass.intervals.size()-1; i++)
@@ -107,7 +108,7 @@ PSDView::PSDView(QWidget *parent) : QGraphicsView(new QGraphicsScene, parent),
         _soilClass.intervalLabels[i]->setTextCursor(cursor);
     }
 
-    _soilClass.subintervals = { 1e-3, 0.002, 0.063, 0.150, 0.300, 2.0, 5.6, 16.0, 63.0, 200.0, 650.0, 2000.0 };
+    _soilClass.subintervals = { MIN_D, 0.002, 0.063, 0.150, 0.300, 2.0, 5.6, 16.0, 63.0, 200.0, 650.0, MAX_D };
     std::vector<std::string> sublabels = { "", "", "fijn", "middel", "grof", "fijn", "matig grof", "grof", "", "", "" };
 
     for(uint i = 1; i < _soilClass.subintervals.size()-1; i++)
@@ -133,6 +134,13 @@ PSDView::PSDView(QWidget *parent) : QGraphicsView(new QGraphicsScene, parent),
     {
         _soilClass.limitLabels.push_back( scene()->addText( printDiameter(_soilClass.subintervals[i]) ) );
         _soilClass.limitLabels[i-1]->setFont(font);
+    }
+
+    font.setPointSize(8);
+    for(int i = 0; i <= 100; i += 10 )
+    {
+        _yAxisLabels.push_back(scene()->addText( QString("%1%").arg(QString::number(i), 3, ' ') ));
+        _yAxisLabels[i/10]->setFont(font);
     }
 }
 
@@ -172,15 +180,15 @@ void PSDView::resizeEvent(QResizeEvent *event)
         _sieveClassLabel->setPos(p1);
 
         // Adjust the soil class bar
-        p1 = _chart->mapToPosition(QPointF(1e-3, -0.2));
+        p1 = _chart->mapToPosition(QPointF(MIN_D, -0.2));
         p1.setY(p1.y() + barHeight*event->size().height());
-        p2 = _chart->mapToPosition(QPointF(2000, -0.2));
+        p2 = _chart->mapToPosition(QPointF(MAX_D, -0.2));
         p2.setY(p2.y() + barHeight*event->size().height());
         _soilClass.bottomLine->setLine(p1.x(), p1.y(), p2.x(), p2.y());
 
-        p1 = _chart->mapToPosition(QPointF(1e-3, -0.15));
+        p1 = _chart->mapToPosition(QPointF(MIN_D, -0.15));
         p1.setY(p1.y() + barHeight*event->size().height());
-        p2 = _chart->mapToPosition(QPointF(2000, -0.15));
+        p2 = _chart->mapToPosition(QPointF(MAX_D, -0.15));
         p2.setY(p2.y() + barHeight*event->size().height());
         _soilClass.middleLine->setLine(p1.x(), p1.y(), p2.x(), p2.y());
 
@@ -247,6 +255,16 @@ void PSDView::resizeEvent(QResizeEvent *event)
         p1 = _chart->mapToPosition(QPointF(_soilClass.intervals[0], -0.23));
         p1.setY(p1.y() + barHeight*event->size().height());
         _soilClassificationLabel->setPos(p1);
+
+        // y-axis labels
+        for(int i=0; i<=10; i++)
+        {
+            p1 = _chart->mapToPosition(QPointF(MIN_D, i/10.0));
+            p1.setY(p1.y() + barHeight*event->size().height() - _yAxisLabels[i]->boundingRect().height()*0.5);
+            p1.setX(p1.x() - _yAxisLabels[i]->boundingRect().width() - 4);
+            _yAxisLabels[i]->setPos(p1);
+
+        }
     }
     QGraphicsView::resizeEvent(event);
 }
@@ -264,7 +282,7 @@ QString PSDView::printDiameter(double d)
     else
     {
         // Display in millimeter units, adjust precision to match significance
-        if (d < 100)
+        if (d < 10)
         {
             result = QString("%1 mm").arg(QString::number(d, 'f', 1));
         }

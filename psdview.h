@@ -4,6 +4,9 @@
 #include <QtWidgets/QGraphicsView>
 #include <QtCharts/QChartGlobal>
 
+#define MIN_D (1e-3)
+#define MAX_D (2000)
+
 QT_CHARTS_BEGIN_NAMESPACE
 class QChart;
 QT_CHARTS_END_NAMESPACE
@@ -50,6 +53,7 @@ private:
     QGraphicsTextItem * _sieveClassLabel;
     soilClassification _soilClass;
     QGraphicsTextItem * _soilClassificationLabel;
+    std::vector<QGraphicsTextItem *> _yAxisLabels;
 };
 
 #endif // PSDVIEW_H
