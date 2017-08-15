@@ -14,6 +14,9 @@ public:
     Soil( std::string name = "some soil" ) { _name = name; };
 
     std::string name() { return _name; };
+
+    bool visible() { return _visible; };
+    void setVisible(bool v) { _visible = v; };
 //    virtual quantity<length> getDmF()=0;
 //    virtual quantity<length> getD50()=0;
 

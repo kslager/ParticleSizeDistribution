@@ -19,7 +19,7 @@ PSDWidget::PSDWidget(QWidget *parent) : QWidget(parent)
 
     std::vector<std::string> actions = { "Add", "Copy", "Delete" };
 
-    for ( ac : actions )
+    for ( auto ac : actions )
     {
         toolLayout->addWidget(new QPushButton(QString::fromStdString(ac)));
     }

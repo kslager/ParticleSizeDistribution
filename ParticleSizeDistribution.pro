@@ -20,3 +20,6 @@ SOURCES += \
     psdview.cpp \
     psdwidget.cpp \
     soilmodel.cpp
+
+INCLUDEPATH += ../boost_1_64_0/
+QMAKE_CXXFLAGS += -std=c++11
