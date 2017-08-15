@@ -19,7 +19,7 @@ PSDView::PSDView(QWidget *parent) : QGraphicsView(new QGraphicsScene, parent),
     _chart->legend()->hide();
 
     QLineSeries *series = new QLineSeries;
-/*    series->append(0.0336309228718879, 0.0);
+    series->append(0.0336309228718879, 0.0);
     series->append(0.0595849288565138, 0.1);
     series->append(0.0784757163748353, 0.2);
     series->append(0.0900605761092338, 0.3);
@@ -29,7 +29,7 @@ PSDView::PSDView(QWidget *parent) : QGraphicsView(new QGraphicsScene, parent),
     series->append(0.114903621173393, 0.7);
     series->append(0.122442856675688, 0.8);
     series->append(0.137572925508522, 0.9);
-    series->append(0.195133363519118, 1.0);*/
+    series->append(0.195133363519118, 1.0);
     _chart->addSeries(series);
 
     QLogValueAxis *axisX = new QLogValueAxis;
@@ -92,7 +92,7 @@ PSDView::PSDView(QWidget *parent) : QGraphicsView(new QGraphicsScene, parent),
     }
 
     font.setBold(false);
-    font.setPointSize(9);
+    font.setPointSize(8);
     QTextBlockFormat format;
     format.setAlignment(Qt::AlignCenter);
     QTextCursor cursor; // = tmp->textCursor();
@@ -282,7 +282,7 @@ QString PSDView::printDiameter(double d)
     else
     {
         // Display in millimeter units, adjust precision to match significance
-        if (d < 10)
+        if (d < 100)
         {
             result = QString("%1 mm").arg(QString::number(d, 'f', 1));
         }

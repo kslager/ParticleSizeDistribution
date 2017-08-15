@@ -9,7 +9,8 @@ HEADERS += \
     mainwindow.h \
     soil.h \
     psdview.h \
-    psdwidget.h
+    psdwidget.h \
+    soilmodel.h
 
 FORMS +=
 
@@ -17,4 +18,5 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     psdview.cpp \
-    psdwidget.cpp
+    psdwidget.cpp \
+    soilmodel.cpp
