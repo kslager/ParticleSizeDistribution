@@ -1,6 +1,30 @@
 #include "soilmodel.h"
 
-SoilModel::SoilModel() : QAbstractListModel()
+SoilModel::SoilModel(QObject *parent) : QAbstractListModel(parent)
 {
+    soils.append(new Soil("Fine sand"));
+    soils.append(new Soil("Medium fine sand"));
+    soils.append(new Soil("Coarse sand"));
+    soils.append(new Soil("Coarse sand and gravel"));
+    soils.append(new Soil("Gravel"));
+}
 
+int SoilModel::rowCount( const QModelIndex & ) const
+{
+    return soils.count();
+}
+
+QVariant SoilModel::data( const QModelIndex & index, int role ) const
+{
+    if (!index.isValid())
+    {
+        return QVariant();
+    }
+
+    if ( role == Qt::DisplayRole )
+    {
+        return QString::fromStdString( soils[ index.row() ]->name() );
+    }
+
+    return QVariant();
 }

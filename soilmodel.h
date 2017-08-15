@@ -3,36 +3,24 @@
 
 #include <QAbstractListModel>
 
+#include "soil.h"
+
 #include <QDebug>
 
 class SoilModel : public QAbstractListModel
 {
-public:
-    SoilModel();
+    Q_OBJECT
 
-    int rowCount( const QModelIndex & parent = QModelIndex() ) const { return 5; }
-    QVariant data( const QModelIndex & index, int role = Qt::DisplayRole ) const
-    {
-        if ( role == Qt::DisplayRole )
-        {
-            switch ( index.row() )
-            {
-                case 0:
-                    return "Fine sand";
-                case 1:
-                    return "Medium fine sand";
-                case 2:
-                    return "Coarse sand";
-                case 3:
-                    return "Coarse sand and gravel";
-                case 4:
-                    return "Gravel";
-                default:
-                    return "some sand";
-            }
-        }
-        return QVariant();
-    }
+public:
+    SoilModel(QObject *parent = 0);
+
+    int rowCount( const QModelIndex & parent = QModelIndex() ) const;
+
+    QVariant data( const QModelIndex & index, int role = Qt::DisplayRole ) const;
+
+private:
+    QVector<Soil *> soils;
+
 };
 
 #endif // SOILMODEL_H

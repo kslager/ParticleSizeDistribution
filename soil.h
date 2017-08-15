@@ -1,8 +1,8 @@
 #ifndef SOIL_H
 #define SOIL_H
 
-//#include <boost/units/io.hpp>
-//#include <boost/units/systems/si/length.hpp>
+#include <boost/units/io.hpp>
+#include <boost/units/systems/si/length.hpp>
 //#include <boost/units/systems/si/mass_density.hpp>
 
 using namespace boost::units;
@@ -11,10 +11,16 @@ using namespace boost::units::si;
 class Soil
 {
 public:
-    Soil() {};
+    Soil( std::string name = "some soil" ) { _name = name; };
 
-    virtual quantity<length> getDmF()=0;
-    virtual quantity<length> getD50()=0;
+    std::string name() { return _name; };
+//    virtual quantity<length> getDmF()=0;
+//    virtual quantity<length> getD50()=0;
+
+private:
+    double d50 = 0.1;
+    bool _visible = true;
+    std::string _name = "some soil";
 
 };
 
