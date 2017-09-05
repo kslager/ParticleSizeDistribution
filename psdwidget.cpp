@@ -17,7 +17,7 @@ PSDWidget::PSDWidget(QWidget *parent) : QWidget(parent)
     QHBoxLayout *toolLayout = new QHBoxLayout();
     toolLayout->setMargin(0);
 
-    std::vector<std::string> actions = { "Add", "Copy", "Delete" };
+    std::vector<std::string> actions = { "Add", "Edit", "Copy", "Delete" };
 
     for ( auto ac : actions )
     {
@@ -38,7 +38,9 @@ PSDWidget::PSDWidget(QWidget *parent) : QWidget(parent)
     QFormLayout *propLayout = new QFormLayout();
     propLayout->addRow("Grain density", new QLabel("2650 kg/m\u00B3"));
     propLayout->addRow("In-situ density", new QLabel("1950 kg/m\u00B3"));
-    propLayout->addRow("Grain size d50", new QLabel("110 μm"));
+    propLayout->addRow("Grain size d<sub>50</sub>", new QLabel("110 μm"));
+    propLayout->addRow("d<sub>mf</sub> = (d<sub>10</sub>+...+d<sub>90</sub>)/9", new QLabel("130 μm"));
+    propLayout->addRow("c<sub>u</sub> = d<sub>60</sub> / d<sub>10</sub>", new QLabel("2.98"));
     propLayout->addRow("Density at 20% in-situ concentration", new QLabel("1210 kg/m\u00B3"));
     propLayout->addRow("Silt fraction", new QLabel("9.0 %"));
 
@@ -57,8 +59,10 @@ PSDWidget::PSDWidget(QWidget *parent) : QWidget(parent)
 
     QHBoxLayout *layout = new QHBoxLayout();
 
+    m_view = new PSDView();
+
     layout->addWidget(sideBar,1);
-    layout->addWidget(new PSDView(),5);
+    layout->addWidget(m_view,5);
 
 
     setLayout(layout);

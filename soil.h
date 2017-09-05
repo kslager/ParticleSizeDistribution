@@ -17,7 +17,7 @@ public:
 
     bool visible() { return _visible; };
     void setVisible(bool v) { _visible = v; };
-//    virtual quantity<length> getDmF()=0;
+    quantity<length> getDmF() { return 1.0*meter; };
 //    virtual quantity<length> getD50()=0;
 
 private:

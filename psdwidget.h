@@ -10,8 +10,10 @@ class PSDWidget : public QWidget
     Q_OBJECT
 public:
     explicit PSDWidget(QWidget *parent = nullptr);
+    PSDView *view() { return this->m_view; };
 
 private:
+    PSDView *m_view;
 
 signals:
 

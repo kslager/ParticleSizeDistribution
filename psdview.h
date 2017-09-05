@@ -54,6 +54,9 @@ private:
     soilClassification _soilClass;
     QGraphicsTextItem * _soilClassificationLabel;
     std::vector<QGraphicsTextItem *> _yAxisLabels;
+
+public slots:
+    void exportPDF();
 };
 
 #endif // PSDVIEW_H

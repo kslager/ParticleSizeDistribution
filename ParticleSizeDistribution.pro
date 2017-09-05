@@ -1,4 +1,4 @@
-QT += core gui charts widgets
+QT += core gui charts widgets printsupport
 
 TARGET = PSD
 TEMPLATE = app
